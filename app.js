@@ -133,6 +133,10 @@ app.get("/dashboard",isLoggedIn,asyncWrap(async(req,res)=>{
     res.render("dashboard",{dashUser});
 }))
 
+app.get("/calender",isLoggedIn,(req,res)=>{
+    res.render("calendar.ejs");
+})
+
 app.get("/signup",(req,res)=>{
     res.render("signup.ejs");
 })

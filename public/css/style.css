@@ -57,3 +57,9 @@ footer{
     border-top: 0;
     border-bottom: 0;
 }
+
+.pastCtUser{
+    padding: 10px;
+    border: 1px solid grey;
+    border-radius: 10px ;
+}

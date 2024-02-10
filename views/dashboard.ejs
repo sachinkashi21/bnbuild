@@ -17,14 +17,16 @@
         </div>
     </div>
     <hr>
-    <div class="col-10 offset-3">
+    <div class="col-6 offset-3">
         <h4>Your Past Contests</h4>
+        <hr>
         <% for(let evt of dashUser.pastEvent){ %>
-            <div class="pastCtUser">
+            <div class="pastCtUser mb-2">
                 <h5><%=evt.title%></h5>
                 <p>Conducted by <b><%=evt.club%></b></p>
                 <p>Date: <%=evt.date%> </p>
             </div>
+            
         <% } %>
     </div>
 </div>
