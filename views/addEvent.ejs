@@ -1,0 +1,51 @@
+<% layout("layout/boilerplate")%>
+<div class="row">
+    <div class="col-8 offset-2">
+        <h3>Create New Event</h3>
+        <form action="/event/new" novalidate class="needs-validation" method="POST" >
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" required id="title" class="form-control title" placeholder="title" name="event[title]">    
+                <div class="valid-feedback">looks good</div>
+                <div class="invalid-feedback">Enter Title</div>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea id="description" required rows="3" class="form-control description" name="event[description]"></textarea> 
+                <div class="invalid-feedback">Enter Description</div>   
+            </div>
+            <!-- <div class="mb-3">
+                <label for="image" class="form-label">Image URL</label>
+                <input type="file" id="image" class="form-control image" placeholder="image/url" name="event[image]">
+            </div> -->
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" required id="location" class="form-control location" placeholder="location" name="event[location]"> 
+                <div class="invalid-feedback">Enter Location</div>   
+            </div>
+            <div class="row">
+                <div class="mb-3 col-md-8">
+                    <label for="country" class="form-label col-4">Club</label>
+                    <input type="text" required id="country" class="form-control country col-8" placeholder="club name" name="event[club]">
+                    <div class="invalid-feedback">Enter Club</div>
+                </div>
+                <div class="mb-3 col-md-4">
+                    <label for="country" class="form-label col-4">Event Date</label>
+                    <input type="date" required id="country" class="form-control country col-8" placeholder="Date" name="event[date]">
+                    <div class="invalid-feedback">Enter Club</div>
+                </div>
+
+            </div>
+            <label for="price" class="form-label">Price</label>
+            <div class="input-group mb-3 col-md-4">
+                <span class="input-group-text"> &#8377;</span>
+                <input type="text" required id="price" class="form-control price" placeholder="price" name="event[price]" aria-label="Amount (to the nearest dollar)">
+                <span class="input-group-text">.00</span>
+                <div class="invalid-feedback">Enter a valid number</div>
+            </div>
+            
+            <button class="btn btn-dark mt-3 mb-3 add-btn">Submit</button>
+        </form>
+        
+    </div>
+</div>
