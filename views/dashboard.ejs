@@ -1,0 +1,13 @@
+<% layout("layout/boilerplate")%>
+<h1> <%= currUser %> </h1>
+<div class="row">
+    <div class="card col-10 offset-1 col-sm-6 offset-sm-3" style="width: 30rem;">
+        <div class="card-body">
+            <h5 class="card-title">My Dashboard</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">@<%=currUser.username%></h6>
+            <p class="card-text"><%=currUser.detail%></p>
+            <a href="#" class="btn btn-dark mb-3">Update information</a>
+            <a href="#" class="btn btn-dark">Delete account</a>
+        </div>
+    </div>
+</div>
