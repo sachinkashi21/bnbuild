@@ -95,6 +95,8 @@ input[type="submit"] {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
 }
 .ft-legal-list li {
   margin: 0.125rem 0.625rem;
