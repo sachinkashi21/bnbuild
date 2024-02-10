@@ -1,0 +1,123 @@
+body {
+  background-color: #f0f0f0;
+}
+
+.calendar {
+  font-family: Arial, sans-serif;
+  width: 80%;
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: #e6f2e6;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.month {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #5cb85c;
+  color: white;
+  border-bottom: 1px solid #4cae4c;
+}
+
+.weekdays {
+  display: flex;
+  justify-content: space-between;
+  background-color: #d9edf7;
+  padding: 5px;
+}
+
+.weekdays div {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.day {
+  padding: 10px;
+  border: 1px solid #d6e9c6;
+  background-color: #dff0d8;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.day:hover {
+  background-color: #d0e9c6;
+}
+
+.today {
+  background-color: #023047;
+  color: white;
+  font-weight: bold;
+}
+
+.empty {
+  visibility: hidden;
+}
+
+.event {
+  background-color: #62b6cb;
+  color: white;
+}
+
+.show-event {
+  position: absolute;
+  z-index: 1;
+  width: auto;
+  height: auto;
+  background-color: red;
+  color: white;
+  padding: 5px;
+  display: none;
+}
+
+.day:hover .show-event {
+  display: block;
+}
+
+.event-timer {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  width: 80%;
+  max-width: 800px;
+  margin: 20px auto;
+  border-radius: 10px;
+  height: 170px;
+  background-color: #dff0d8;
+}
+
+.event-timer h3 {
+  background-color: #4cae4c;
+  color: white;
+  padding: 10px;
+}
+
+.event-timer ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-around;
+}
+
+.event-timer ul li {
+  font-size: 1rem;
+  background-color: #d0e9c6;
+  width: auto;
+  padding: 5px;
+  z-index: 1;
+  box-shadow: 0px 0px 2px gray;
+}
+.event-timer .tags li {
+  padding: 5px;
+}
+.event-timer .time li {
+  padding: 8px;
+}
