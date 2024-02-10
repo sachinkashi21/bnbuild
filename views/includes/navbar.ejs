@@ -1,43 +1,43 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" href="/">Campus-Connect</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link active" aria-current="page" href="/index">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
+            <a class="nav-link" href="">Features</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
+            <a class="nav-link" href="/calender">Calender</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+            <a class="nav-link" href="/dashboard" aria-disabled="true">Dashboard</a>
           </li>
         </ul>
+
+        <div class="navbar-nav ms-auto">
+          <%if(currUser && currUser.detail==="organizer"){%>
+            <a class="nav-link btn btn-light rounded-pill" href="/event/new">Add event</a>&nbsp;
+          <%}%>
+          <% if(!currUser){ %>
+            <button class="btn btn-outline-dark rounded-pill" onclick="location.href = '/signup';">Sign-Up</button>&nbsp;
+            <button class="btn btn-outline-dark rounded-pill" onclick="location.href = '/login';">Log-In</button>&nbsp;
+          <% } %>   
+          <% if(currUser){ %>
+            <a class="nav-link" href="/logout">Log-Out</a>&nbsp;
+          <% } %>
+        </div>
       </div>
 
-      <div class="navbar-nav ms-auto">
-
-        <a class="nav-link btn btn-light rounded-pill" href="/event/new">Add event</a>&nbsp;
-        <% if(!locals.currUser){ %>
-          <button class="btn btn-outline-dark rounded-pill" onclick="location.href = '/signup';">Sign-Up</button>&nbsp;
-          <button class="btn btn-outline-dark rounded-pill" onclick="location.href = '/login';">Log-In</button>&nbsp;
-        <% } %>    
-        <% if(locals.currUser){ %>
-          <a class="nav-link" href="/logout">Log-Out</a>&nbsp;
-        <% } %>
-      </div>  
+        
     </div>
   </nav>
-
-        <div id="menu-btn" class="fas fa-bars"></div>
-    </header>
-</body>
+   
 
 
 <!--Bootstrap js cdn link-->
@@ -49,17 +49,17 @@ crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
 <script>
-    let menu = document.querySelector("#menu-btn");
-let navbar = document.querySelector(".navbar");
+//     let menu = document.querySelector("#menu-btn");
+// let navbar = document.querySelector(".navbar");
 
-menu.onclick = () =>{
-    menu.classList.toggle("fa-times");
-    navbar.classList.toggle("active");
-}
+// menu.onclick = () =>{
+//     menu.classList.toggle("fa-times");
+//     navbar.classList.toggle("active");
+// }
 
-window.onscroll = () =>{
-    menu.classList.remove("fa-times");
-    menu.classList.remove("active");
-}
+// window.onscroll = () =>{
+//     menu.classList.remove("fa-times");
+//     menu.classList.remove("active");
+// }
 </script>
 </html>

@@ -35,11 +35,10 @@ const session=require("express-session");
 // const MongoStore = require('connect-mongo');
 // const flash=require("connect-flash");
 
-app.use((req,res,next)=>{
-   
-    res.locals.currUser= req.user;
-    next();
-});
+const {asyncWrap}=require("./middlewares.js");
+const {isLoggedIn, isOwner,}=require("./middlewares.js");
+
+
 
 
 let sessionOptions={     
@@ -61,6 +60,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+
 app.use((req,res,next)=>{
     // res.locals.success=req.flash("success");
     // res.locals.error=req.flash("error");
@@ -68,45 +68,51 @@ app.use((req,res,next)=>{
     next();
 });
 
-app.get("/",async(req,res)=>{
+app.get("/",asyncWrap(async(req,res)=>{
     let arrList=await Event.find({});
     res.render("index.ejs",{arrList});
-})
+}))
 
-app.get("/index",async(req,res)=>{
+app.get("/index",asyncWrap(async(req,res)=>{
     let arrList=await Event.find({});
     res.render("index.ejs",{arrList});
-})
-
-app.get("/signup",(req,res)=>{
-    res.render("signup.ejs");
-})
+}))
 
 
-app.get("/event/new",(req,res)=>{
+app.get("/event/new",isLoggedIn,(req,res)=>{
     res.render("addEvent.ejs");
 });
 
-app.post("/event/new",async(req,res)=>{
+app.post("/event/new",isLoggedIn,asyncWrap(async(req,res)=>{
     console.log(req.body.event);
     let event=req.body.event;
     let newEvent= new Event(event);
     // newEvent.organizer=req.user._id;
     let savedListing=await newEvent.save();
-    res.send("success");
-})
+    res.redirect("/index");
+}))
 
-app.get("/event/:id",async(req,res)=>{
+app.get("/event/:id",isLoggedIn,asyncWrap(async(req,res)=>{
     let {id}=req.params;
     let event=await Event.findById(id);
     res.render("display",{event}); 
+}))
+
+app.get("/dashboard",isLoggedIn,asyncWrap(async(req,res)=>{
+    // let user=res.locals.currUser;
+    // let event=await User.findById(currUser.id);
+    res.render("dashboard");
+}))
+
+app.get("/signup",(req,res)=>{
+    res.render("signup.ejs");
 })
 
-app.post("/signup",async(req,res)=>{
+app.post("/signup",asyncWrap(async(req,res)=>{
     try{
-        let {username, email, password}=req.body;
+        let {username, email, password,detail}=req.body;
         let newUser= new User({
-            username,email
+            username,email,detail
         });
         let registeredUser=await User.register(newUser,password);
         req.login(registeredUser,(err)=>{
@@ -119,7 +125,7 @@ app.post("/signup",async(req,res)=>{
         req.flash("error",e.message);
         res.redirect("/signup");
     }
-})
+}))
 
 app.get("/login",(req,res)=>{
     res.render('login.ejs');
@@ -135,6 +141,14 @@ app.post("/login",passport.authenticate("local",{
     res.redirect("/index");
 })
 
+app.get("/logout",(req,res,next)=>{
+    req.logout((err)=>{
+        if(err){
+            return next(err);
+        }
+        res.redirect("/index");
+    });
+})
 
 
 app.listen(3000,()=>{

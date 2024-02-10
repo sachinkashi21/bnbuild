@@ -1,7 +1,7 @@
 <% layout("layout/boilerplate")%>
 
 <div class="row">
-    <div class="col-6 offset-3 card card-border mt-3 mb-3">
+    <div class=" col-10 offset-1 col-sm-6 offset-sm-3 col-lg-4 offset-lg-4 card card-border mt-3 mb-3">
         <div class="card-body">
             <h2 class="mb-3 ">Sign-Up</h2>
             <form action="/signup" novalidate class="needs-validation" method="POST" >
@@ -23,7 +23,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="detail" class="form-label">User Specification</label>
-                    <select name="detail" id="detail" class="form-control form-select" aria-label="Default select example">
+                    <select name="detail" id="detail" class="form-control form-select" aria-label="Default select example" >
                         <option value="student" selected>Student</option>
                         <option value="organizer">Organizer</option>
                     </select>

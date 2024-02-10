@@ -12,6 +12,10 @@ body{
 .navbar{
     background-color: white;
     height: 5rem;
+    z-index: 1221;
+}
+.container-fluid{
+    background-color: #f8f9fa;
 }
 
 .nav-link{
@@ -25,4 +29,8 @@ body{
     margin-top: 10px;
     text-decoration: none;
     color: black;
+    
+}
+.index-event .card{
+    height: 180px;
 }

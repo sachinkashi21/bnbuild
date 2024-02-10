@@ -1,3 +1,10 @@
+module.exports.asyncWrap= function(fn){
+    return function(req,res,next){
+        fn(req,res,next).catch((err)=>{
+            next(err);
+        })
+    };
+};
 
 module.exports.saveRedirectUrl= (req,res,next)=>{
     if(req.session.redirectUrl){
