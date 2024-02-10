@@ -1,0 +1,28 @@
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+}
+
+.container{
+    flex:1;
+}
+
+.navbar{
+    background-color: white;
+    height: 5rem;
+}
+
+.nav-link{
+    color: black !important;
+}
+
+
+
+.index-event{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-decoration: none;
+    color: black;
+}
