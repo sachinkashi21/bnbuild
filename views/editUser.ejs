@@ -1,0 +1,53 @@
+<% layout("layout/boilerplate")%>
+
+<div class="row">
+    <div class="col-8 offset-2">
+        
+        <h3>Edit Details: @<%=user.username%></h3>
+        <hr>
+            <form action="/user/update/<%=user._id%>?_method=PUT" novalidate class="needs-validation" method="POST" >
+                <div class="mb-3">
+                    <label for="skill" class="form-label">Enter to top 3 Skills</label>
+                    <input type="text"  placeholder="skill 1" id="skill" class="form-control mb-1" name="user[skills][0]">
+                    <input type="text"  placeholder="skill 2" id="skill" class="form-control mb-1" name="user[skills][1]">
+                    <input type="text"  placeholder="skill 3" id="skill" class="form-control mb-1" name="user[skills][2]">
+                    <div class="valid-feedback">looks good</div>
+                    <div class="invalid-feedback">Enter Title</div>
+                </div>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect01">Branch</label>
+                    <select class="form-select" id="inputGroupSelect01" name="user[branch]">
+                      <option selected>None</option>
+                      <option value="CSE">CSE</option>
+                      <option value="ISE">ISE</option>
+                      <option value="AIML">AIML</option>
+                      <option value="ECE">ECE</option>
+                      <option value="EEE">EEE</option>
+                      <option value="Mech">MECH</option>
+                      <option value="Civil">CIVIL</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">About</label>
+                    <textarea placeholder="description"  id="description" class="form-control" name="user[about]"></textarea>
+                    <div class="invalid-feedback">Enter Description</div>  
+                </div>
+                <div class="mb-3">
+                    <label class="input-group-text" for="inputGroupSelect01">Year</label>
+                    <select class="form-select" id="inputGroupSelect01" name="user[year]">
+                      <option selected value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      </select>
+                </div>
+         
+                <button class="edit-btn btn btn-danger mb-3 mt-3">SUBMIT</button>
+            </form>
+            
+        </div>
+    </div>
+
+    
+      
+      

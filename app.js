@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const express = require("express");
 const app = express();
 const bodyParser = require('body-parser');
@@ -11,13 +13,15 @@ app.use(express.urlencoded({ extended: true }));
 const methodOverride = require("method-override");
 app.use(methodOverride("_method"));
 
+
+
 const engine = require("ejs-mate");
 app.engine("ejs", engine);
 
 const User = require("./models/user.js");
 const Event = require("./models/event.js");
 
-const dbUrl = "mongodb://127.0.0.1:27017/bnb";
+const dbUrl = process.env.ATLASDB_URL;
 const mongoose = require("mongoose");
 main().then((res) => {
     console.log("connection established");
@@ -32,8 +36,20 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 
 const session = require("express-session");
-// const MongoStore = require('connect-mongo');
+const MongoStore = require('connect-mongo');
 // const flash=require("connect-flash");
+
+let store=MongoStore.create({
+    mongoUrl: dbUrl,
+    crypto:{
+        secret: process.env.SECRET,
+    },
+    touchAfter: 60*60*3,
+});
+
+store.on("error",()=>{
+    console.log("ERROR IN MONGO SESSION STORE",err);
+})
 
 const {asyncWrap}=require("./middlewares.js");
 const {isLoggedIn, isOwner,}=require("./middlewares.js");
@@ -42,7 +58,8 @@ const {isLoggedIn, isOwner,}=require("./middlewares.js");
 
 
 let sessionOptions = {
-    secret: "mysecret",
+    store,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -99,10 +116,21 @@ app.get("/event/:id",isLoggedIn,asyncWrap(async(req,res)=>{
     res.render("display",{event}); 
 }))
 
+app.post("/event/register/:id",isLoggedIn,async(req,res)=>{
+    let {id}=req.params;
+    let user=res.locals.currUser;
+    let arr=user.pastEvent;
+    let newArr=[...arr,id];
+    let response=await user.updateOne({_id:user.id},{pastEvent: newArr});
+    console.log(response);
+    
+    res.redirect("/index");
+})
+
 app.get("/dashboard",isLoggedIn,asyncWrap(async(req,res)=>{
     // let user=res.locals.currUser;
-    // let event=await User.findById(currUser.id);
-    res.render("dashboard");
+    let dashUser=await User.findById(res.locals.currUser._id).populate("pastEvent") ;
+    res.render("dashboard",{dashUser});
 }))
 
 app.get("/signup",(req,res)=>{
@@ -151,6 +179,19 @@ app.get("/logout",(req,res,next)=>{
     });
 })
 
+app.get("/user/update/:id",isLoggedIn,asyncWrap(async(req,res)=>{
+    let {id}=req.params;
+    let user = await User.findById(id);
+    res.render("editUser",{user});
+}))
+
+app.put("/user/update/:id",isLoggedIn,asyncWrap(async(req,res)=>{
+    let {user}=req.body;
+    let {id}=req.params;
+    let newUser = await User.updateOne({_id:id},{...user});
+    
+    res.redirect("/dashboard");
+}))
 
 app.listen(3000, () => {
     console.log("app running on 3000");

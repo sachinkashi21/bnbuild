@@ -23,8 +23,7 @@ let eventSchema= new Schema({
     },
     faq: [
         {
-            type: Schema.Types.ObjectId,
-            ref: "Review"
+            content: String,
         },
     ],
     club: {

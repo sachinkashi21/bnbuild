@@ -1,16 +1,59 @@
 <% layout("layout/boilerplate")%>
 
 <div class="row">
-    <div class="col-6 offset-3">
-
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
+    <div class="card col-10 offset-3  mt-3 mb-3 dashboard-card" style="width: 50%;">
+        <div class="card-body" >
+            <h5 class="card-title">EventName: <%=event.title%></h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary"><%=event.description%></h6>
+            
+            <p class="card-text"><b>Club: </b><%=event.club%></p>
+            <p class="card-text"><b>Organizer: </b>@<%=event.organizer%></p>
+            <p class="card-text"><b>Date of event: </b><%=event.date%></p>
+            <p class="card-text"><b>Registration Fees: </b><%=event.price%></p>
+            <div class="dash-btns">
+                <form action="/event/register/<%=event.id%>" method="POST">
+                    <button class="btn btn-danger">Add to calender </button>
+                </form>
+                <a href="#" class="btn btn-danger">Register</a>
             </div>
         </div>
     </div>
+    <hr>
+
+    <div class="col-6 offset-3">
+        <% if(currUser){ %>
+        <hr>
+        <h3>Ask your Question:</h3>
+        <form method="POST" action="/event/<%=event._id%>/faq" novalidate class="mb-3 needs-validation">
+    
+            <div class="mb-3">
+                <label for="comment" class="form-label">Question</label>
+                <textarea required id="comment" cols="20" rows="5" class="form-control" name="faq"></textarea>
+                <div class="invalid-feedback">Enter some Comment</div>
+            </div>
+            <button class="btn btn-outline-dark ">SUBMIT</button> 
+        </form>
+        <% } %>
+    </div>
+
+    <div class="col-8 offset-2">
+        <%if(event.faq.length){%>
+            <hr>
+        <%}%>    
+        <!-- row-cols-1 row-cols-md-2 card-container -->
+        <div class="row ">
+            <%for(let faq of event.faq){%>
+                <div class="card col-6">
+                    <div class="card-body">
+                        </b></p><hr class=" mb-0">
+                        <p class="card-text mb-3">
+                            <%=faq.content%>
+                        </p>
+                    </div>
+                </div>
+                <%}%>    
+        </div>
+    </div>
+
+</div>
 </div>

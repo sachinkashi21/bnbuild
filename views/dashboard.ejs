@@ -1,13 +1,30 @@
 <% layout("layout/boilerplate")%>
-<h1> <%= currUser %> </h1>
+
 <div class="row">
-    <div class="card col-10 offset-1 col-sm-6 offset-sm-3" style="width: 30rem;">
-        <div class="card-body">
+    <div class="card col-10 offset-3  mt-3 mb-3 dashboard-card" style="width: 50%;">
+        <div class="card-body" >
             <h5 class="card-title">My Dashboard</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">@<%=currUser.username%></h6>
-            <p class="card-text"><%=currUser.detail%></p>
-            <a href="#" class="btn btn-dark mb-3">Update information</a>
-            <a href="#" class="btn btn-dark">Delete account</a>
+            <h6 class="card-subtitle mb-2 text-body-secondary">Username: @<%=dashUser.username%></h6>
+            <p class="card-text"><b>I am: </b><%=dashUser.detail%></p>
+            <p class="card-text"><b>About: </b><%=dashUser.about%></p>
+            <p class="card-text"><b>Branch: </b><%=dashUser.branch%></p>
+            <p class="card-text"><b>Year: </b><%=dashUser.year%></p>
+            <p class="card-text"><b>Skills: </b><%=dashUser.skills[0]%>, <%=dashUser.skills[1]%>, <%=dashUser.skills[2]%></p>
+            <div class="dash-btns">
+                <a href="/user/update/<%=dashUser.id%>" class="btn btn-danger">add Details</a>
+                <a href="#" class="btn btn-danger">Delete account</a>
+            </div>
         </div>
+    </div>
+    <hr>
+    <div class="col-10 offset-3">
+        <h4>Your Past Contests</h4>
+        <% for(let evt of dashUser.pastEvent){ %>
+            <div class="pastCtUser">
+                <h5><%=evt.title%></h5>
+                <p>Conducted by <b><%=evt.club%></b></p>
+                <p>Date: <%=evt.date%> </p>
+            </div>
+        <% } %>
     </div>
 </div>

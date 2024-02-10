@@ -10,6 +10,24 @@ let userSchema= new Schema({
     detail:{
         type: String,
         enum: ["student","organizer"],
+    },
+    skills:[{
+        type:String,
+    }
+    ],
+    pastEvent:
+    [{
+        type:Schema.Types.ObjectId,
+        ref: "Event",
+    }],
+    branch:{
+        type: String,
+    },
+    about:{
+        type: String,
+    },
+    year: {
+        type: String,
     }
 })
 userSchema.plugin(passportLocalMongoose);

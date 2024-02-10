@@ -1,13 +1,35 @@
 <% layout("layout/boilerplate")%>
 
 <div class="card-container row row-cols-xl-4 offset-2 row-cols-lg-3  row-cols-md-2  row-cols-1 mb-3 mt-3 ms-3 me-3">
-    
+      
         <%for(list of arrList){%>
+            
+            
             <a href="/event/<%=list._id%>" class="col index-event">
+                
                 <div class="card" style="width: 17rem;">
-                    <div class="card-body">
+                    <div class="card-body pt-1 ms-auto">
+
+                        <% var today = new Date();
+                        var dd = String(today.getDate()).padStart(2, '0');
+                        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                        var yyyy = today.getFullYear();
+                        today = yyyy + '-' + mm + '-' + dd;
+
+                        let some= list.date.toISOString();
+                        theDay = some.slice(0,10);
+                        if(theDay > today){%>
+                            <button class="btn btn-outline-danger mb-2 btn-sm rounded-pill">Upcoming <i class="fa-solid fa-wifi"></i></button> 
+                        <%} else{%>
+                            <button class="btn btn-secondary mb-2 btn-sm rounded-pill">Past Event</button>
+                        <%}%>
+
                         <h5 class="card-title"><%=list.title%></h5>
-                        <p class="card-text"><%=list.description%></p>
+                        <hr>
+                        <p class="card-text"><b>Venue:</b> <%=list.location%></p>
+                        <p class="card-text"><b>Club:</b> <%=list.club%></p>
+                        
+                        <p class="card-text"><b>Date:</b> <%= list.date%></p>
                         
                     </div>
                 </div>    

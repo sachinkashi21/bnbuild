@@ -25,6 +25,7 @@ body{
 
 
 .index-event{
+    text-align: center;
     margin-bottom: 10px;
     margin-top: 10px;
     text-decoration: none;
@@ -32,5 +33,27 @@ body{
     
 }
 .index-event .card{
-    height: 180px;
+    height: 23  0px;
+}
+
+nav{
+    border-bottom: 1px solid rgba(128, 128, 128, 0.543);
+}
+footer{
+    border-top: 1px solid rgba(128, 128, 128, 0.454);
+}
+
+.dash-btns{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.dash-btns a{
+    margin-bottom:10px ;
+}
+
+.dashboard-card {
+    border-top: 0;
+    border-bottom: 0;
 }
