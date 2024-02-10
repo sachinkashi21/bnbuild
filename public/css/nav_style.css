@@ -30,16 +30,32 @@ html {
     background: #F1EFEF;
 }
 
-.header .logo {
+.header .Logo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header .Logo .logo {
     font-size: 3.5rem;
     /* color: var(--green); */
     text-decoration: none;
+}
+
+.header .inclusion {
+    width: 60px;
 }
 
 .header .navbar a {
     font-size: 2rem;
     margin-left: 2rem;
     text-decoration: none;
+    color: black;
 }
 
 .header .navbar a:hover {
@@ -88,7 +104,8 @@ html {
         right: 0;
         bottom: 0;
         z-index: 100;
-        background: red;
+        background: white;
+        color: black;
     }
 
     .header .navbar.active {
