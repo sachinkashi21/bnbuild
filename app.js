@@ -15,6 +15,7 @@ const engine=require("ejs-mate");
 app.engine("ejs",engine);
 
 const User=require("./models/user.js");
+const Event=require("./models/event.js");
 
 const dbUrl="mongodb://127.0.0.1:27017/bnb";
 const mongoose = require("mongoose");
@@ -60,13 +61,20 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use((req,res,next)=>{
+    // res.locals.success=req.flash("success");
+    // res.locals.error=req.flash("error");
+    res.locals.currUser= req.user;
+    next();
+});
 
-app.get("/",(req,res)=>{
-    res.render("index.ejs");
+app.get("/",async(req,res)=>{
+    let arrList=await Event.find({});
+    res.render("index.ejs",{arrList});
 })
 
 app.get("/index",async(req,res)=>{
-    let arrList=await Event.find();
+    let arrList=await Event.find({});
     res.render("index.ejs",{arrList});
 })
 
@@ -84,8 +92,14 @@ app.post("/event/new",async(req,res)=>{
     let event=req.body.event;
     let newEvent= new Event(event);
     // newEvent.organizer=req.user._id;
-    let savedListing=await newListing.save();
+    let savedListing=await newEvent.save();
     res.send("success");
+})
+
+app.get("/event/:id",async(req,res)=>{
+    let {id}=req.params;
+    let event=await Event.findById(id);
+    res.render("display",{event}); 
 })
 
 app.post("/signup",async(req,res)=>{
@@ -120,6 +134,8 @@ app.post("/login",passport.authenticate("local",{
     }
     res.redirect("/index");
 })
+
+
 
 app.listen(3000,()=>{
     console.log("app running on 3000");

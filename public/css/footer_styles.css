@@ -53,15 +53,15 @@ body {
     justify-content: space-evenly;
   }
 }
-form {
+/* form {
   display: flex;
   flex-wrap: wrap;
-}
-input[type="email"] {
+} */
+/* input[type="email"] {
   border: 0;
   padding: 0.625rem;
   margin-top: 0.3125rem;
-}
+} */
 input[type="submit"] {
   background-color: #00d188;
   color: #fff;
