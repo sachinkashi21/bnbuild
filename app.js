@@ -1,5 +1,5 @@
-const express=require("express");
-const app=express();
+const express = require("express");
+const app = express();
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 const path = require("path");
@@ -8,47 +8,47 @@ app.set("views", path.join(__dirname, "/views"));
 app.use(express.static(path.join(__dirname, "/public")))
 app.use(express.urlencoded({ extended: true }));
 
-const methodOverride=require("method-override");
+const methodOverride = require("method-override");
 app.use(methodOverride("_method"));
 
-const engine=require("ejs-mate");
-app.engine("ejs",engine);
+const engine = require("ejs-mate");
+app.engine("ejs", engine);
 
-const User=require("./models/user.js");
-const Event=require("./models/event.js");
+const User = require("./models/user.js");
+const Event = require("./models/event.js");
 
-const dbUrl="mongodb://127.0.0.1:27017/bnb";
+const dbUrl = "mongodb://127.0.0.1:27017/bnb";
 const mongoose = require("mongoose");
 main().then((res) => {
     console.log("connection established");
 }).catch((err) => {
     console.log(err);
-}) 
+})
 async function main() {
     await mongoose.connect(dbUrl);
 }
 
-const passport=require("passport");
-const LocalStrategy=require("passport-local");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
 
-const session=require("express-session");
+const session = require("express-session");
 // const MongoStore = require('connect-mongo');
 // const flash=require("connect-flash");
 
-app.use((req,res,next)=>{
-   
-    res.locals.currUser= req.user;
+app.use((req, res, next) => {
+
+    res.locals.currUser = req.user;
     next();
 });
 
 
-let sessionOptions={     
+let sessionOptions = {
     secret: "mysecret",
     resave: false,
-    saveUninitialized:true,
+    saveUninitialized: true,
     cookie: {
-        expires: Date.now()+ 1000*60*60*24*3,
-        maxAge: 1000*60*60*24*3,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 3,
+        maxAge: 1000 * 60 * 60 * 24 * 3,
         httpOnly: true,
     }
 }
@@ -61,75 +61,79 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use((req,res,next)=>{
+app.use((req, res, next) => {
     // res.locals.success=req.flash("success");
     // res.locals.error=req.flash("error");
-    res.locals.currUser= req.user;
+    res.locals.currUser = req.user;
     next();
 });
 
-app.get("/",async(req,res)=>{
-    let arrList=await Event.find({});
-    res.render("index.ejs",{arrList});
+app.get("/", async (req, res) => {
+    let arrList = await Event.find({});
+    res.render("index.ejs", { arrList });
 })
 
-app.get("/index",async(req,res)=>{
-    let arrList=await Event.find({});
-    res.render("index.ejs",{arrList});
+app.get("/calender", (req, res) => {
+    res.render("calendar.ejs");
 })
 
-app.get("/signup",(req,res)=>{
+app.get("/index", async (req, res) => {
+    let arrList = await Event.find({});
+    res.render("index.ejs", { arrList });
+})
+
+app.get("/signup", (req, res) => {
     res.render("signup.ejs");
 })
 
 
-app.get("/event/new",(req,res)=>{
+app.get("/event/new", (req, res) => {
     res.render("addEvent.ejs");
 });
 
-app.post("/event/new",async(req,res)=>{
+app.post("/event/new", async (req, res) => {
     console.log(req.body.event);
-    let event=req.body.event;
-    let newEvent= new Event(event);
+    let event = req.body.event;
+    let newEvent = new Event(event);
     // newEvent.organizer=req.user._id;
-    let savedListing=await newEvent.save();
+    let savedListing = await newEvent.save();
     res.send("success");
 })
 
-app.get("/event/:id",async(req,res)=>{
-    let {id}=req.params;
-    let event=await Event.findById(id);
-    res.render("display",{event}); 
+app.get("/event/:id", async (req, res) => {
+    let { id } = req.params;
+    let event = await Event.findById(id);
+    res.render("display", { event });
 })
 
-app.post("/signup",async(req,res)=>{
-    try{
-        let {username, email, password}=req.body;
-        let newUser= new User({
-            username,email
+app.post("/signup", async (req, res) => {
+    try {
+        let { username, email, password } = req.body;
+        let newUser = new User({
+            username, email
         });
-        let registeredUser=await User.register(newUser,password);
-        req.login(registeredUser,(err)=>{
-            if(err){
+        let registeredUser = await User.register(newUser, password);
+        req.login(registeredUser, (err) => {
+            if (err) {
                 return next(err);
             }
             res.redirect("/index");
         })
-    } catch(e){
-        req.flash("error",e.message);
+    } catch (e) {
+        req.flash("error", e.message);
         res.redirect("/signup");
     }
 })
 
-app.get("/login",(req,res)=>{
+app.get("/login", (req, res) => {
     res.render('login.ejs');
 })
 
-app.post("/login",passport.authenticate("local",{
-    failureRedirect:"/login",
+app.post("/login", passport.authenticate("local", {
+    failureRedirect: "/login",
     // failureFlash: true,
-    }),(req,res)=>{
-    if(res.locals.redirectUrl){
+}), (req, res) => {
+    if (res.locals.redirectUrl) {
         return res.redirect(res.locals.redirectUrl);
     }
     res.redirect("/index");
@@ -137,6 +141,6 @@ app.post("/login",passport.authenticate("local",{
 
 
 
-app.listen(3000,()=>{
+app.listen(3000, () => {
     console.log("app running on 3000");
 })
