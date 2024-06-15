@@ -1,6 +1,6 @@
 <h2>Connected dots: a website to make event management easy</h2>
 <video width="320" height="240" controls>
-  <source src="[movie.mp4](https://drive.google.com/file/d/1Aau5tKYV0mAdp7wa2fwb4pIUwfKyd6iR/view?usp=drive_link)" type="video/mp4">
+  <source src="https://drive.google.com/file/d/1Aau5tKYV0mAdp7wa2fwb4pIUwfKyd6iR/view?usp=drive_link" type="video/mp4">
   <source src="[movie.ogg](https://drive.google.com/file/d/1Aau5tKYV0mAdp7wa2fwb4pIUwfKyd6iR/view?usp=drive_link)" type="video/ogg">
   Your browser does not support the video tag.
 </video>
